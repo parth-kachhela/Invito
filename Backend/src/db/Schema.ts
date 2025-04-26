@@ -63,7 +63,7 @@ const GuestSchema = new Schema(
       type: String,
       required: true,
     },
-    event: {
+    eventId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Event",
       required: true,
@@ -72,7 +72,7 @@ const GuestSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    qrCodeData: {
+    qrcodedata: {
       type: String,
       required: true,
     },
