@@ -60,3 +60,35 @@ const EventSchema = new Schema(
 );
 
 export const EventModel = mongoose.model("Event", EventSchema);
+
+//guest schema
+const GuestSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+    },
+    event: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Event",
+      required: true,
+    },
+    hasCheckedIn: {
+      type: Boolean,
+      default: false,
+    },
+    qrCodeData: {
+      type: String,
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+export const GuestModel = mongoose.model("Guest", GuestSchema);
