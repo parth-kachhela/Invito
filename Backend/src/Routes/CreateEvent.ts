@@ -9,12 +9,28 @@ export async function CreateEvent(req, res) {
   const time = req.body.time;
   const expiresAt = req.body.expiresAt;
 
-  const responese = await EventModel.insertMany({
-    name: name,
-    description: description,
-    vanue: vanue,
-    date: date,
-    time: time,
-    expiresAt: expiresAt,
-  });
+  try {
+    const responese = await EventModel.insertMany({
+      name: name,
+      description: description,
+      vanue: vanue,
+      date: date,
+      time: time,
+      expiresAt: expiresAt,
+    });
+
+    if (responese) {
+      res.status(200).json({
+        message: "event added..",
+        //@ts-ignore
+        eventId: responese._id,
+      });
+    } else {
+      res.status(500).json({
+        message: "internal server erro",
+      });
+    }
+  } catch (e) {
+    console.log(e);
+  }
 }
