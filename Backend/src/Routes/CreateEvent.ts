@@ -1,3 +1,4 @@
+import { response } from "express";
 import { EventModel } from "../db/Schema";
 
 //@ts-ignore
@@ -7,23 +8,22 @@ export async function CreateEvent(req, res) {
   const vanue = req.body.vanue;
   const date = req.body.date;
   const time = req.body.time;
-  const expiresAt = req.body.expiresAt;
 
   try {
-    const responese = await EventModel.insertMany({
+    const ans = await EventModel.insertMany({
       name: name,
       description: description,
       vanue: vanue,
       date: date,
       time: time,
-      expiresAt: expiresAt,
     });
-
-    if (responese) {
+    const id = ans[0]._id;
+    //@ts-ignore
+    localStorage.setItem("eventId", id);
+    if (ans) {
       res.status(200).json({
-        message: "event added..",
         //@ts-ignore
-        eventId: responese._id,
+        m: id,
       });
     } else {
       res.status(500).json({

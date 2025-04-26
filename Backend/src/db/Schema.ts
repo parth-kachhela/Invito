@@ -44,10 +44,6 @@ const EventSchema = new Schema(
       type: Date,
       default: Date.now,
     },
-    expiresAt: {
-      type: Date,
-      required: true,
-    },
   },
   {
     timestamps: true,
