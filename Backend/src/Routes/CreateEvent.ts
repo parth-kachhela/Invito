@@ -18,8 +18,6 @@ export async function CreateEvent(req, res) {
       time: time,
     });
     const id = ans[0]._id;
-    //@ts-ignore
-    localStorage.setItem("eventId", id);
     if (ans) {
       res.status(200).json({
         //@ts-ignore

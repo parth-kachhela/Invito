@@ -30,7 +30,7 @@ export const Button = (props: buttonProps) => {
         sizeStyle[props.size]
       } ${defaultStyle} cursor-pointer ${
         props.loding ? " opacity-40 disabled" : ""
-      }`}
+      } ${!props.startIcon ? "flex justify-center items-center" : null} `}
     >
       <div>{props.startIcon}</div>
       <div>{props.text}</div>
