@@ -14,11 +14,6 @@ interface EventInterface {
 
 const EventSchema = new Schema(
   {
-    eventId: {
-      type: String,
-      require: true,
-      unique: true,
-    },
     name: {
       type: String,
       require: true,
