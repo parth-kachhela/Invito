@@ -1,9 +1,11 @@
-import express from "express";
+import express, { json } from "express";
 import { CreateEvent } from "./Routes/CreateEvent";
 import mongoose from "mongoose";
+import cors from "cors";
 import { MONGODB_URL } from "./config";
 const app = express();
-
+app.use(express.json());
+app.use(cors());
 mongoose
   .connect(MONGODB_URL)
   .then(() => {
