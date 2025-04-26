@@ -1,4 +1,3 @@
-import { response } from "express";
 import { EventModel } from "../db/Schema";
 
 //@ts-ignore
