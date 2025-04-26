@@ -74,7 +74,6 @@ const GuestSchema = new Schema(
     },
     qrcodedata: {
       type: String,
-      required: true,
     },
   },
   {

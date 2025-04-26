@@ -1,13 +1,13 @@
-import { EventModel } from "../db/Schema";
+import { EventModel, GuestModel } from "../db/Schema";
 
 //@ts-ignore
-export async function CreateEvent(req, res) {
+export async function AddGuest(req, res) {
   const name = req.body.name;
   const email = req.body.email;
   const eventId = req.body.eventId;
 
   try {
-    const ans = await EventModel.insertMany({
+    const ans = await GuestModel.insertMany({
       name: name,
       email: email,
       eventId: eventId,
@@ -17,6 +17,7 @@ export async function CreateEvent(req, res) {
       res.status(200).json({
         //@ts-ignore
         m: id,
+        message: "Guest added..!",
       });
     } else {
       res.status(500).json({
