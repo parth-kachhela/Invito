@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 
 interface buttonProps {
-  variant: "primary" | "secondrey";
+  variant: "primary" | "secondray";
   size: "sm" | "lg" | "md";
   text: string;
   startIcon?: ReactElement;
@@ -11,7 +11,7 @@ interface buttonProps {
 
 const variantstyle = {
   primary: "bg-indigo-700 text-white",
-  secondrey: "bg-indigo-400 text-indigo-700",
+  secondray: "bg-indigo-400 text-indigo-700",
 };
 
 const sizeStyle = {
