@@ -1,3 +1,9 @@
+import { Button } from "../components/ui/Button";
+
 export function Landingpage() {
-  return <div>hye from landing page</div>;
+  return (
+    <div>
+      <Button variant="primary" size="md" text="Create Event" />
+    </div>
+  );
 }
