@@ -9,7 +9,7 @@ export function AddGuest() {
   const nameRef = useRef<HTMLInputElement>(undefined);
   const emailRef = useRef<HTMLInputElement>(undefined);
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false); // <-- Loading state
+  const [loading, setLoading] = useState(false);
 
   async function CreateApi() {
     const name = nameRef.current?.value;
@@ -17,7 +17,7 @@ export function AddGuest() {
     const eventId = localStorage.getItem("eventId");
 
     try {
-      setLoading(true); // API call se pehle loading on
+      setLoading(true);
       const ans = await axios.post(`${BACKEND_URL}/api/v1/add`, {
         name: name,
         email: email,
@@ -30,7 +30,7 @@ export function AddGuest() {
       console.error(error);
       alert("Failed to add guest!");
     } finally {
-      setLoading(false); // API call ke baad loading off
+      setLoading(false);
     }
   }
 
@@ -45,7 +45,7 @@ export function AddGuest() {
           size="lg"
           text="Submit"
           onClick={CreateApi}
-          loading={loading} // <-- loader pass kiya
+          loading={loading}
         />
       </div>
     </div>
