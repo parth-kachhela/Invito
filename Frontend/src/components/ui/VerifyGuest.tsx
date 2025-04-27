@@ -61,6 +61,7 @@ export default function VerifyGuest() {
         if (code) {
           console.log("QR Code found:", code.data);
           setQrResult(code.data);
+          console.log("this is rendered..!");
 
           // TODO: Yaha API call bhi kar sakte ho verify guest ke liye
         }

@@ -1,1 +1,1 @@
-{"root":["./src/config.ts","./src/index.ts","./src/routes/createevent.ts","./src/routes/guest.ts","./src/db/schema.ts"],"version":"5.8.3"}
+{"root":["./src/config.ts","./src/index.ts","./src/routes/createevent.ts","./src/routes/guest.ts","./src/routes/verifyguest.ts","./src/db/schema.ts"],"version":"5.8.3"}
