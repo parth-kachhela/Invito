@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Button } from "./Button";
 import { Input } from "./Input";
 import axios from "axios";
@@ -9,31 +9,44 @@ export function AddGuest() {
   const nameRef = useRef<HTMLInputElement>(undefined);
   const emailRef = useRef<HTMLInputElement>(undefined);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false); // <-- Loading state
+
   async function CreateApi() {
     const name = nameRef.current?.value;
     const email = emailRef.current?.value;
     const eventId = localStorage.getItem("eventId");
-    const ans = await axios.post(`${BACKEND_URL}/api/v1/add`, {
-      name: name,
-      email: email,
-      eventId: eventId,
-    });
-    //@ts-ignore
-    let id = ans.data?.m;
-    navigate("/dashboard");
+
+    try {
+      setLoading(true); // API call se pehle loading on
+      const ans = await axios.post(`${BACKEND_URL}/api/v1/add`, {
+        name: name,
+        email: email,
+        eventId: eventId,
+      });
+      //@ts-ignore
+      let id = ans.data?.m;
+      navigate("/dashboard");
+    } catch (error) {
+      console.error(error);
+      alert("Failed to add guest!");
+    } finally {
+      setLoading(false); // API call ke baad loading off
+    }
   }
+
   return (
     <div className="h-screen w-screen flex justify-center items-center bg-gray-200">
-      <div className="flex flex-col justify-center  items-center bg-white rounded-md max-h-full max-w-full gap-3 p-4 shadow-sm">
-        <h1 className="text-xl">Event Detials :</h1>
-        <Input placeholder="Name of event" ref={nameRef} />
-        <Input placeholder="email of event" ref={emailRef} />
+      <div className="flex flex-col justify-center items-center bg-white rounded-md max-h-full max-w-full gap-3 p-4 shadow-sm">
+        <h1 className="text-xl">Guest Details :</h1>
+        <Input placeholder="Name of Guest" ref={nameRef} />
+        <Input placeholder="Email of Guest" ref={emailRef} />
         <Button
           variant="secondray"
           size="lg"
           text="Submit"
           onClick={CreateApi}
-        ></Button>
+          loading={loading} // <-- loader pass kiya
+        />
       </div>
     </div>
   );

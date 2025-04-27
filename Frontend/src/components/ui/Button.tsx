@@ -6,7 +6,7 @@ interface buttonProps {
   text: string;
   startIcon?: ReactElement;
   onClick?: () => void;
-  loding?: boolean;
+  loading?: boolean; // corrected spelling
 }
 
 const variantstyle = {
@@ -26,14 +26,23 @@ export const Button = (props: buttonProps) => {
   return (
     <button
       onClick={props.onClick}
-      className={`${variantstyle[props.variant]} ${
-        sizeStyle[props.size]
-      } ${defaultStyle} cursor-pointer ${
-        props.loding ? " opacity-40 disabled" : ""
-      } ${!props.startIcon ? "flex justify-center items-center" : null} `}
+      disabled={props.loading} // Actual disable
+      className={`${variantstyle[props.variant]} 
+        ${sizeStyle[props.size]} 
+        ${defaultStyle} 
+        cursor-pointer 
+        ${props.loading ? "opacity-50" : ""} 
+        ${!props.startIcon ? "flex justify-center items-center" : ""}
+      `}
     >
-      <div>{props.startIcon}</div>
-      <div>{props.text}</div>
+      {props.loading ? (
+        <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
+      ) : (
+        <>
+          {props.startIcon && <div>{props.startIcon}</div>}
+          <div>{props.text}</div>
+        </>
+      )}
     </button>
   );
 };
