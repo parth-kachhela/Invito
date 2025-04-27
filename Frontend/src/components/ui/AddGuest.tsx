@@ -5,7 +5,7 @@ import axios from "axios";
 import { BACKEND_URL } from "../../../config";
 import { useNavigate } from "react-router-dom";
 
-export function CreateContent() {
+export function AddGuest() {
   const nameRef = useRef<HTMLInputElement>(undefined);
   const emailRef = useRef<HTMLInputElement>(undefined);
   const navigate = useNavigate();
