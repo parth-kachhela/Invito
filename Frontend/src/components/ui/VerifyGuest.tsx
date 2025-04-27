@@ -3,9 +3,9 @@
 import { useRef, useEffect, useState } from "react";
 import jsQR from "jsqr";
 import { useNavigate } from "react-router-dom";
-import { Button } from "./Button";
 import { BACKEND_URL } from "../../../config";
 import axios from "axios";
+import { MyButton } from "./MyButton";
 
 export default function VerifyGuest() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -19,7 +19,7 @@ export default function VerifyGuest() {
   const [isScanning, setIsScanning] = useState(true);
   const navigate = useNavigate();
 
-  const intervalRef = useRef<any>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const hasScannedRef = useRef(false);
 
   const stopCamera = () => {
@@ -147,13 +147,13 @@ export default function VerifyGuest() {
       )}
 
       <div className="flex gap-4 mt-8">
-        <Button
+        <MyButton
           variant="secondray"
           size="md"
           text="Scan Again"
           onClick={resetScanner}
         />
-        <Button
+        <MyButton
           variant="secondray"
           size="md"
           text="Stop"

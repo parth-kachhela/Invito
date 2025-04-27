@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/ui/Button";
+import { MyButton } from "../components/ui/MyButton";
 
 export function Dashboard() {
   const navigate = useNavigate();
   return (
     <div>
-      <Button
+      <MyButton
         variant="secondray"
         size="md"
         text="Add Guest"
@@ -13,7 +14,7 @@ export function Dashboard() {
           navigate("/add");
         }}
       />
-      <Button
+      <MyButton
         variant="secondray"
         size="md"
         text="Verify Guest"

@@ -1,9 +1,9 @@
 import { useRef, useState } from "react";
-import { Button } from "./Button";
 import { Input } from "./Input";
 import axios from "axios";
 import { BACKEND_URL } from "../../../config";
 import { useNavigate } from "react-router-dom";
+import { MyButton } from "./MyButton";
 
 export function AddGuest() {
   const nameRef = useRef<HTMLInputElement>(undefined);
@@ -40,7 +40,7 @@ export function AddGuest() {
         <h1 className="text-xl">Guest Details :</h1>
         <Input placeholder="Name of Guest" ref={nameRef} />
         <Input placeholder="Email of Guest" ref={emailRef} />
-        <Button
+        <MyButton
           variant="secondray"
           size="lg"
           text="Submit"

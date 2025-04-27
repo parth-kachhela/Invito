@@ -1,9 +1,9 @@
 import { useRef, useState } from "react";
-import { Button } from "./Button";
 import { Input } from "./Input";
 import axios from "axios";
 import { BACKEND_URL } from "../../../config";
 import { useNavigate } from "react-router-dom";
+import { MyButton } from "./MyButton";
 
 export function CreateEvent() {
   const nameRef = useRef<HTMLInputElement>(undefined);
@@ -48,13 +48,13 @@ export function CreateEvent() {
         <Input placeholder="vanue of event" ref={vanueRef} />
         <Input placeholder="date of event : DD-MM-YYYY" ref={dateRef} />
         <Input placeholder="time of event " ref={timeRef} />
-        <Button
+        <MyButton
           variant="secondray"
           size="lg"
           text="Submit"
           onClick={CreateApi}
           loading={loading}
-        ></Button>
+        ></MyButton>
       </div>
     </div>
   );
