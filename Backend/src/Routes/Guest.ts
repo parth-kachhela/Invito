@@ -19,7 +19,9 @@ export async function AddGuest(req, res) {
     });
 
     const guestId = ans[0]._id;
-
+    const event = await EventModel.find({
+      _id: eventId,
+    });
     const qrData = JSON.stringify({ eventId, guestId });
     const qrCodeBuffer = await QRCode.toBuffer(qrData);
 
@@ -37,11 +39,11 @@ export async function AddGuest(req, res) {
       to: email,
       subject: "You are Invited to an Event 🎉",
       html: `
-    <h1>You're Invited!</h1>
-    <p><strong>Venue:</strong> Check event details.</p>
-    <p><strong>Description:</strong> Enjoy the event!</p>
-    <p><strong>Date & Time:</strong> Check event date/time.</p>
-    <p>Show this QR code at the entrance:</p>
+    <h1>It's ${event[0].name}</h1>
+    <p><strong>Venue:</strong> ${event[0].vanue}</p>
+    <p><strong>Description:</strong> ${event[0].description}</p>
+    <p><strong>Date & Time:</strong> ${event[0].date} and Time : ${event[0].time}}</p>
+    <p>This is your QRcode please show this for your entry :</p>
     <img src="cid:qrcodeimage" alt="QR Code"/>
   `,
       attachments: [
@@ -62,12 +64,12 @@ export async function AddGuest(req, res) {
       }
     );
 
-    const ans1 = await EventModel.find({
-      _id: eventId,
+    await EventModel.findByIdAndUpdate(eventId, {
+      $push: { guests: guestId },
     });
+
     if (ans) {
       res.status(200).json({
-        m: ans1,
         message: "Guest added and email sent..!",
       });
     } else {
