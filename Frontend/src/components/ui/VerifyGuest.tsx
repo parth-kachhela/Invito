@@ -19,35 +19,55 @@ export default function VerifyGuest() {
   const [isScanning, setIsScanning] = useState(true);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const getVideo = async () => {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: "environment" },
-        });
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-          videoRef.current.play();
-          setStream(stream);
-        }
-      } catch (err) {
-        console.error("Camera error:", err);
-      }
-    };
+  const intervalRef = useRef<any>(null);
+  const hasScannedRef = useRef(false);
 
-    getVideo();
+  const stopCamera = () => {
+    if (stream) {
+      stream.getTracks().forEach((track) => track.stop());
+      setStream(null);
+      console.log("Camera stopped!");
+    }
+  };
+
+  const resetScanner = () => {
+    setGuestName(undefined);
+    setGuestEmail(undefined);
+    setErrorMessage(undefined);
+    setIsScanning(true);
+    hasScannedRef.current = false;
+    startCamera();
+  };
+
+  const startCamera = async () => {
+    try {
+      const newStream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "environment" },
+      });
+      if (videoRef.current) {
+        videoRef.current.srcObject = newStream;
+        await videoRef.current.play();
+        setStream(newStream);
+      }
+    } catch (err) {
+      console.error("Camera error:", err);
+    }
+  };
+
+  useEffect(() => {
+    startCamera();
 
     return () => {
-      if (stream) {
-        const tracks = stream.getTracks();
-        tracks.forEach((track) => track.stop());
-      }
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      stopCamera();
     };
-  }, [stream]);
+  }, []);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (videoRef.current && canvasRef.current && isScanning) {
+    if (!isScanning) return;
+
+    intervalRef.current = setInterval(() => {
+      if (videoRef.current && canvasRef.current && !hasScannedRef.current) {
         const canvas = canvasRef.current;
         const context = canvas.getContext("2d");
         if (!context) return;
@@ -65,7 +85,13 @@ export default function VerifyGuest() {
         const code = jsQR(imageData.data, imageData.width, imageData.height);
 
         if (code) {
-          setIsScanning(false); // Stop scanning after one successful scan
+          hasScannedRef.current = true; // Prevent multiple scans
+          setIsScanning(false);
+
+          // STOP camera and interval immediately
+          if (intervalRef.current) clearInterval(intervalRef.current);
+          stopCamera();
+
           const parsedData = JSON.parse(code.data);
           const eventId = parsedData.eventId;
           const guestId = parsedData.guestId;
@@ -90,25 +116,12 @@ export default function VerifyGuest() {
             });
         }
       }
-    }, 500); // 500ms ke interval me check karega
+    }, 500);
 
-    return () => clearInterval(interval);
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, [isScanning]);
-
-  const stopCamera = () => {
-    if (stream) {
-      const tracks = stream.getTracks();
-      tracks.forEach((track) => track.stop());
-      console.log("Camera stopped!");
-    }
-  };
-
-  const resetScanner = () => {
-    setGuestName(undefined);
-    setGuestEmail(undefined);
-    setErrorMessage(undefined);
-    setIsScanning(true);
-  };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
@@ -145,6 +158,7 @@ export default function VerifyGuest() {
           size="md"
           text="Stop"
           onClick={() => {
+            if (intervalRef.current) clearInterval(intervalRef.current);
             stopCamera();
             navigate("/dashboard");
           }}
