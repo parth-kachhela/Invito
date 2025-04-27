@@ -1,6 +1,8 @@
 import { EventModel, GuestModel } from "../db/Schema";
 import QRCode from "qrcode";
+import { createTransport } from "nodemailer";
 import nodemailer from "nodemailer";
+import mongoose from "mongoose";
 
 //@ts-ignore
 export async function AddGuest(req, res) {
@@ -18,16 +20,15 @@ export async function AddGuest(req, res) {
 
     const guestId = ans[0]._id;
 
-    // Step 2: Generate QR Code
     const qrData = JSON.stringify({ eventId, guestId });
-    const qrCodeImageUrl = await QRCode.toDataURL(qrData);
+    const qrCodeBuffer = await QRCode.toBuffer(qrData);
 
-    // Step 3: Send Email
-    const transporter = nodemailer.createTransport({
+    // Send Email
+    const transporter = createTransport({
       service: "gmail",
       auth: {
-        user: "invito7878@gmail.com", // <-- apna gmail id daal
-        pass: "usdz ugwi tysw qkbj", // <-- Gmail app password use karna
+        user: "invito7878@gmail.com",
+        pass: "usdz ugwi tysw qkbj",
       },
     });
 
@@ -36,13 +37,20 @@ export async function AddGuest(req, res) {
       to: email,
       subject: "You are Invited to an Event 🎉",
       html: `
-        <h1>You're Invited!</h1>
-        <p><strong>Venue:</strong> Check event details.</p>
-        <p><strong>Description:</strong> Enjoy the event!</p>
-        <p><strong>Date & Time:</strong> Check event date/time.</p>
-        <p>Show this QR code at the entrance:</p>
-        <img src="${qrCodeImageUrl}" alt="QR Code"/>
-      `,
+    <h1>You're Invited!</h1>
+    <p><strong>Venue:</strong> Check event details.</p>
+    <p><strong>Description:</strong> Enjoy the event!</p>
+    <p><strong>Date & Time:</strong> Check event date/time.</p>
+    <p>Show this QR code at the entrance:</p>
+    <img src="cid:qrcodeimage" alt="QR Code"/>
+  `,
+      attachments: [
+        {
+          filename: "qrcode.png",
+          content: qrCodeBuffer,
+          cid: "qrcodeimage",
+        },
+      ],
     });
 
     await GuestModel.updateOne(
@@ -50,13 +58,16 @@ export async function AddGuest(req, res) {
         _id: guestId,
       },
       {
-        qrcodedata: qrCodeImageUrl,
+        qrcodedata: qrData,
       }
     );
-    // Step 4: Return Response
+
+    const ans1 = await EventModel.find({
+      _id: eventId,
+    });
     if (ans) {
       res.status(200).json({
-        m: guestId,
+        m: ans1,
         message: "Guest added and email sent..!",
       });
     } else {

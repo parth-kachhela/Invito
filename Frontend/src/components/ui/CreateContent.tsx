@@ -35,11 +35,11 @@ export function CreateContent() {
     <div className="h-screen w-screen flex justify-center items-center bg-gray-200">
       <div className="flex flex-col justify-center  items-center bg-white rounded-md max-h-full max-w-full gap-3 p-4 shadow-sm">
         <h1 className="text-xl">Event Detials :</h1>
-        <Input placeholder="Name of event" />
-        <Input placeholder="Description of event" />
-        <Input placeholder="vanue of event" />
-        <Input placeholder="date of event : DD-MM-YYYY" />
-        <Input placeholder="time of event " />
+        <Input placeholder="Name of event" ref={nameRef} />
+        <Input placeholder="Description of event" ref={DescriptionRef} />
+        <Input placeholder="vanue of event" ref={vanueRef} />
+        <Input placeholder="date of event : DD-MM-YYYY" ref={dateRef} />
+        <Input placeholder="time of event " ref={timeRef} />
         <Button
           variant="secondray"
           size="lg"
