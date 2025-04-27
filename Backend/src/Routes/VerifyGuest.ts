@@ -21,7 +21,6 @@ export const VerifyGuest = async (req, res) => {
       res.status(200).json({
         name: Guest.name,
         email: Guest.email,
-        hasCheckedIn: check,
       });
     }
   } catch (e) {

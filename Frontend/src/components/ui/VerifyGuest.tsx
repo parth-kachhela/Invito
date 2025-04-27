@@ -4,6 +4,8 @@ import { useRef, useEffect, useState } from "react";
 import jsQR from "jsqr";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./Button";
+import { BACKEND_URL } from "../../../config";
+import axios from "axios";
 
 export default function VerifyGuest() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -59,11 +61,23 @@ export default function VerifyGuest() {
         const code = jsQR(imageData.data, imageData.width, imageData.height);
 
         if (code) {
-          console.log("QR Code found:", code.data);
-          setQrResult(code.data);
-          console.log("this is rendered..!");
+          const parsedData = JSON.parse(code.data);
+          const eventId = parsedData.eventId;
+          const guestId = parsedData.guestId;
+          axios
+            .post(`${BACKEND_URL}/api/v1/verify`, {
+              guestId: guestId,
+              eventId: eventId,
+            })
+            .then((ans) => {
+              console.log(ans);
+            })
+            .catch((e) => {
+              console.log("verify axios request error" + e);
+            });
+          //@ts-ignore
 
-          // TODO: Yaha API call bhi kar sakte ho verify guest ke liye
+          setQrResult(code.data);
         }
       }
     }, 500); // 500ms me 1 baar scan karega
