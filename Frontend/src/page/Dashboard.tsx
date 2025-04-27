@@ -1,3 +1,9 @@
+import { Button } from "../components/ui/Button";
+
 export function Dashboard() {
-  return <div>hye there</div>;
+  return (
+    <div>
+      <Button variant="secondray" size="md" text="Add Guest" />
+    </div>
+  );
 }
