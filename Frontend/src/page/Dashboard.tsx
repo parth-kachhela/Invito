@@ -13,6 +13,14 @@ export function Dashboard() {
           navigate("/add");
         }}
       />
+      <Button
+        variant="secondray"
+        size="md"
+        text="Verify Guest"
+        onClick={() => {
+          navigate("/verify");
+        }}
+      />
     </div>
   );
 }

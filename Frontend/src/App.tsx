@@ -4,6 +4,9 @@ import { Landingpage } from "./page/Landingpage";
 import { Dashboard } from "./page/Dashboard";
 import { CreateContent } from "./components/ui/CreateContent";
 import { AddGuest } from "./components/ui/AddGuest";
+import VerifyGuest from "./components/ui/VerifyGuest";
+//@ts-ignore
+
 function App() {
   return (
     <>
@@ -13,6 +16,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/create" element={<CreateContent />} />
           <Route path="/add" element={<AddGuest />} />
+          <Route path="/verify" element={<VerifyGuest />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -1,58 +1,72 @@
-// Scanner.tsx
+"use client";
 
-import { useState } from "react";
-import QrReader from "react-qr-reader";
-// import axios from "axios";
+import { useRef, useEffect, useState } from "react";
+import jsQR from "jsqr";
 
-const Scanner = () => {
-  const [scanResult, setScanResult] = useState("");
+export default function VerifyGuest() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [qrResult, setQrResult] = useState<string>("");
 
-  const handleScan = async (data: any) => {
-    if (data) {
-      console.log("QR Data:", data);
-      setScanResult(data);
-
-      // Step 1: Parse QR data
-      const { eventId, guestId } = JSON.parse(data);
-      console.log(eventId, guestId);
+  useEffect(() => {
+    const getVideo = async () => {
       try {
-        // Step 2: Send to backend
-        // const response = await axios.post(
-        //   "http://localhost:3000/api/verify-guest",
-        //   {
-        //     eventId,
-        //     guestId,
-        //   }
-        // );
-        //@ts-ignore
-        alert(response.data?.message);
-      } catch (error: any) {
-        console.error(error);
-        alert(error.response?.data?.message || "Verification failed");
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: "environment" },
+        });
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+          videoRef.current.play();
+        }
+      } catch (err) {
+        console.error("Camera error:", err);
       }
-    }
-  };
+    };
 
-  const handleError = (err: any) => {
-    console.error(err);
-  };
+    getVideo();
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (videoRef.current && canvasRef.current) {
+        const canvas = canvasRef.current;
+        const context = canvas.getContext("2d");
+        if (!context) return;
+
+        canvas.width = videoRef.current.videoWidth;
+        canvas.height = videoRef.current.videoHeight;
+        context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+
+        const imageData = context.getImageData(
+          0,
+          0,
+          canvas.width,
+          canvas.height
+        );
+        const code = jsQR(imageData.data, imageData.width, imageData.height);
+
+        if (code) {
+          console.log("QR Code found:", code.data);
+          setQrResult(code.data);
+
+          // TODO: Yaha API call bhi kar sakte ho verify guest ke liye
+        }
+      }
+    }, 500); // 500ms me 1 baar scan karega
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <div className="flex flex-col items-center mt-10">
-      <h2 className="text-2xl font-bold mb-4">Scan your QR Code 🎯</h2>
-      <QrReader
-        delay={300}
-        onError={handleError}
-        onScan={handleScan}
-        style={{ width: "300px" }}
-      />
-      {scanResult && (
-        <div className="mt-4 p-2 border rounded bg-gray-100">
-          <strong>Scanned Data:</strong> {scanResult}
+    <div className="flex flex-col items-center justify-center min-h-screen">
+      <h1 className="text-2xl font-bold mb-6">QR Scanner 🚀</h1>
+      <video ref={videoRef} className="w-full max-w-md rounded-lg shadow-md" />
+      <canvas ref={canvasRef} className="hidden" />
+      {qrResult && (
+        <div className="mt-4 text-green-600 font-semibold">
+          Result: {qrResult}
         </div>
       )}
     </div>
   );
-};
-
-export default Scanner;
+}
