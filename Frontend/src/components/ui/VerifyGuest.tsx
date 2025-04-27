@@ -2,11 +2,15 @@
 
 import { useRef, useEffect, useState } from "react";
 import jsQR from "jsqr";
+import { useNavigate } from "react-router-dom";
+import { Button } from "./Button";
 
 export default function VerifyGuest() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [qrResult, setQrResult] = useState<string>("");
+  const [stream, setStream] = useState<MediaStream | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getVideo = async () => {
@@ -17,6 +21,7 @@ export default function VerifyGuest() {
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
           videoRef.current.play();
+          setStream(stream); // Save stream to stop later
         }
       } catch (err) {
         console.error("Camera error:", err);
@@ -24,6 +29,14 @@ export default function VerifyGuest() {
     };
 
     getVideo();
+
+    // Cleanup the video stream when component unmounts
+    return () => {
+      if (stream) {
+        const tracks = stream.getTracks();
+        tracks.forEach((track) => track.stop()); // Stop all tracks
+      }
+    };
   }, []);
 
   useEffect(() => {
@@ -57,6 +70,15 @@ export default function VerifyGuest() {
     return () => clearInterval(interval);
   }, []);
 
+  // Function to stop the camera
+  const stopCamera = () => {
+    if (stream) {
+      const tracks = stream.getTracks();
+      tracks.forEach((track) => track.stop()); // Stop all tracks
+      console.log("Camera stopped!");
+    }
+  };
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <h1 className="text-2xl font-bold mb-6">QR Scanner 🚀</h1>
@@ -67,6 +89,17 @@ export default function VerifyGuest() {
           Result: {qrResult}
         </div>
       )}
+
+      <div className="mt-4 py-2 px-4">
+        <Button
+          variant="secondray"
+          size="md"
+          text="Stop"
+          onClick={() => {
+            stopCamera(), navigate("/dashboard");
+          }}
+        ></Button>
+      </div>
     </div>
   );
 }
