@@ -1,8 +1,6 @@
 import { EventModel, GuestModel } from "../db/Schema";
 import QRCode from "qrcode";
 import { createTransport } from "nodemailer";
-import nodemailer from "nodemailer";
-import mongoose from "mongoose";
 
 //@ts-ignore
 export async function AddGuest(req, res) {
@@ -11,7 +9,6 @@ export async function AddGuest(req, res) {
   const eventId = req.body.eventId;
 
   try {
-    // Step 1: Save guest in DB
     const ans = await GuestModel.insertMany({
       name: name,
       email: email,
@@ -25,7 +22,6 @@ export async function AddGuest(req, res) {
     const qrData = JSON.stringify({ eventId, guestId });
     const qrCodeBuffer = await QRCode.toBuffer(qrData);
 
-    // Send Email
     const transporter = createTransport({
       service: "gmail",
       auth: {
