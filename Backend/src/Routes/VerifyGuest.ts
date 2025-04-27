@@ -9,21 +9,25 @@ export const VerifyGuest = async (req, res) => {
       eventId: eventId,
       _id: guestId,
     });
+
     if (Guest) {
-      const check = await GuestModel.updateOne(
-        {
-          _id: guestId,
-        },
-        {
-          hasCheckedIn: true,
-        }
-      );
+      if (Guest.hasCheckedIn) {
+        return res.status(400).json({ message: "Guest already checked in!" });
+      }
+
+      await GuestModel.updateOne({ _id: guestId }, { hasCheckedIn: true });
+
       res.status(200).json({
         name: Guest.name,
         email: Guest.email,
       });
+    } else {
+      res.status(404).json({
+        message: "Guest not found for this event!",
+      });
     }
   } catch (e) {
     console.log("internal server error ..!" + e);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };
