@@ -22,6 +22,7 @@ export function CreateEvent() {
 
     try {
       setLoading(true);
+
       const ans = await axios.post(`${BACKEND_URL}/api/v1/create`, {
         name: name,
         description: description,

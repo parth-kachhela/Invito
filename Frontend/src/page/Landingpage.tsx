@@ -49,7 +49,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* New Features Section */}
       <section className="bg-white py-20 px-8">
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-4xl font-bold mb-12">How It Works</h2>
