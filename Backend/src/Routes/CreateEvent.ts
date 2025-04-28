@@ -1,4 +1,3 @@
-import { response } from "express";
 import { EventModel } from "../db/Schema";
 
 //@ts-ignore
@@ -11,6 +10,19 @@ export async function CreateEvent(req, res) {
   const email = req.body.email;
 
   try {
+    try {
+      const emailRes = await EventModel.find({
+        email: email,
+      });
+      if (emailRes) {
+        res.status(500).json({
+          message: "your Event is already created",
+        });
+      }
+    } catch (e) {
+      console.log("error with one user create two event with a account" + e);
+    }
+
     const ans = await EventModel.insertMany({
       name: name,
       description: description,
