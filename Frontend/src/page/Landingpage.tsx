@@ -43,7 +43,13 @@ export default function LandingPage() {
           >
             Create Event
           </Button>
-          <Button variant="outline" className="px-8 py-4 text-lg rounded-2xl">
+          <Button
+            variant="outline"
+            className="px-8 py-4 text-lg rounded-2xl cursor-pointer"
+            onClick={() => {
+              navigate("/otp");
+            }}
+          >
             View Events
           </Button>
         </div>
