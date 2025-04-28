@@ -11,6 +11,7 @@ export function CreateEvent() {
   const vanueRef = useRef<HTMLInputElement>(undefined);
   const dateRef = useRef<HTMLInputElement>(undefined);
   const timeRef = useRef<HTMLInputElement>(undefined);
+  const emailRef = useRef<HTMLInputElement>(undefined);
   const [loading, setLoading] = useState(false); // <-- Loading state
   const navigate = useNavigate();
   async function CreateApi() {
@@ -19,12 +20,14 @@ export function CreateEvent() {
     const vanue = vanueRef.current?.value;
     const date = dateRef.current?.value;
     const time = timeRef.current?.value;
+    const email = emailRef.current?.value;
 
     try {
       setLoading(true);
 
       const ans = await axios.post(`${BACKEND_URL}/api/v1/create`, {
         name: name,
+        email: email,
         description: description,
         vanue: vanue,
         date: date,
@@ -45,6 +48,7 @@ export function CreateEvent() {
       <div className="flex flex-col justify-center  items-center bg-white rounded-md max-h-full max-w-full gap-3 p-4 shadow-sm">
         <h1 className="text-xl">Event Detials :</h1>
         <Input placeholder="Name of event" ref={nameRef} />
+        <Input placeholder="Email of event Handler" ref={emailRef} />
         <Input placeholder="Description of event" ref={DescriptionRef} />
         <Input placeholder="vanue of event" ref={vanueRef} />
         <Input placeholder="date of event : DD-MM-YYYY" ref={dateRef} />

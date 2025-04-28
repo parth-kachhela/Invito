@@ -8,6 +8,7 @@ export async function CreateEvent(req, res) {
   const vanue = req.body.vanue;
   const date = req.body.date;
   const time = req.body.time;
+  const email = req.body.email;
 
   try {
     const ans = await EventModel.insertMany({
@@ -16,6 +17,7 @@ export async function CreateEvent(req, res) {
       vanue: vanue,
       date: date,
       time: time,
+      email: email,
     });
     const id = ans[0]._id;
     if (ans) {

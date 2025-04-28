@@ -1,19 +1,12 @@
 import mongoose, { Schema } from "mongoose";
 
-interface EventInterface {
-  eventId: string;
-  name: string;
-  description: string;
-  vanue: string;
-  date: Date;
-  time: string;
-  guest: [];
-  createdAt: Date;
-  expiresAt: Date;
-}
-
 const EventSchema = new Schema(
   {
+    email: {
+      type: String,
+      require: true,
+      unique: true,
+    },
     name: {
       type: String,
       require: true,
