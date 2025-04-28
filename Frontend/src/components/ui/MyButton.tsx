@@ -10,8 +10,8 @@ interface buttonProps {
 }
 
 const variantstyle = {
-  primary: "bg-indigo-700 text-white",
-  secondray: "bg-indigo-400 text-indigo-700",
+  primary: "bg-purple-400 text-gray-100",
+  secondray: "bg-purple-700 text-white",
 };
 
 const sizeStyle = {
