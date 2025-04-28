@@ -7,6 +7,7 @@ import { AddGuest } from "./Routes/Guest";
 import { VerifyGuest } from "./Routes/VerifyGuest";
 import { FetchAll } from "./Routes/FetchAll";
 import { RemoveGuest } from "./Routes/RemoveGuest";
+import { Otpsend } from "./Routes/Otpsend";
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -30,7 +31,7 @@ app.post("/api/v1/add", AddGuest);
 app.post("/api/v1/verify", VerifyGuest);
 app.get("/api/v1/all", FetchAll);
 app.delete("/api/v1/remove/:id", RemoveGuest);
-
+app.post("/api/v1/send-event-otp", Otpsend);
 app.listen(3000, () => {
   console.log("app is listing ..!");
 });
