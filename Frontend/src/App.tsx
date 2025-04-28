@@ -6,6 +6,7 @@ import { AddGuest } from "./components/ui/AddGuest";
 import VerifyGuest from "./components/ui/VerifyGuest";
 import Landingpage from "./page/Landingpage";
 import Dashboard from "./page/Dashboard";
+import VerifyOtp from "./components/ui/VerifyOtp";
 //@ts-ignore
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path="/create" element={<CreateEvent />} />
           <Route path="/add" element={<AddGuest />} />
           <Route path="/verify" element={<VerifyGuest />} />
+          <Route path="/otp" element={<VerifyOtp />} />
         </Routes>
       </BrowserRouter>
     </>
