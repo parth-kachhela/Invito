@@ -1,7 +1,7 @@
 import { EventModel } from "../db/Schema";
 import { eventOtpStore } from "./Otpsend";
 
-export async function VerifyEventOtp(req: any, res: any) {
+export async function Otpverify(req: any, res: any) {
   const { email, otp } = req.body;
 
   if (!email || !otp) {
