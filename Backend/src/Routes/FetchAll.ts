@@ -3,7 +3,13 @@ import { EventModel } from "../db/Schema";
 //@ts-ignore
 export async function FetchAll(req, res) {
   try {
-    const eventId = req.body.eventId;
+    const eventId = req.query.eventId; // Query parameter se eventId lo
+
+    if (!eventId) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Event ID is required" });
+    }
 
     const event = await EventModel.findById(eventId).populate("guests");
 
