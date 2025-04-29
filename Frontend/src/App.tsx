@@ -7,22 +7,51 @@ import VerifyGuest from "./components/ui/VerifyGuest";
 import Landingpage from "./page/Landingpage";
 import Dashboard from "./page/Dashboard";
 import VerifyOtp from "./components/ui/VerifyOtp";
-//@ts-ignore
+import { ProtectedRoute } from "./components/ui/ProtectedRoute"; // 👈 yeh import add karo
 
 function App() {
   return (
-    <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Landingpage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/create" element={<CreateEvent />} />
-          <Route path="/add" element={<AddGuest />} />
-          <Route path="/verify" element={<VerifyGuest />} />
-          <Route path="/otp" element={<VerifyOtp />} />
-        </Routes>
-      </BrowserRouter>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Landingpage />} />
+        <Route path="/otp" element={<VerifyOtp />} />
+        <Route path="/create" element={<CreateEvent />} />
+
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/add"
+          element={
+            <ProtectedRoute>
+              <AddGuest />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/verify"
+          element={
+            <ProtectedRoute>
+              <VerifyGuest />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="*"
+          element={
+            <div className="text-center text-red-600 p-10 text-xl">
+              404 - Page not found
+            </div>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
