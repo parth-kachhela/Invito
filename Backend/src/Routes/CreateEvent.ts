@@ -2,47 +2,33 @@ import { EventModel } from "../db/Schema";
 
 //@ts-ignore
 export async function CreateEvent(req, res) {
-  const name = req.body.name;
-  const description = req.body.description;
-  const vanue = req.body.vanue;
-  const date = req.body.date;
-  const time = req.body.time;
-  const email = req.body.email;
+  const { name, description, vanue, date, time, email } = req.body;
 
   try {
-    try {
-      const emailRes = await EventModel.find({
-        email: email,
+    const emailRes = await EventModel.findOne({ email });
+
+    if (emailRes) {
+      return res.status(409).json({
+        message: "Your event is already created",
       });
-      if (emailRes) {
-        res.status(500).json({
-          message: "your Event is already created",
-        });
-      }
-    } catch (e) {
-      console.log("error with one user create two event with a account" + e);
     }
 
-    const ans = await EventModel.insertMany({
-      name: name,
-      description: description,
-      vanue: vanue,
-      date: date,
-      time: time,
-      email: email,
+    const newEvent = await EventModel.create({
+      name,
+      description,
+      vanue,
+      date,
+      time,
+      email,
     });
-    const id = ans[0]._id;
-    if (ans) {
-      res.status(200).json({
-        //@ts-ignore
-        m: id,
-      });
-    } else {
-      res.status(500).json({
-        message: "internal server erro",
-      });
-    }
+
+    return res.status(201).json({
+      m: newEvent._id,
+    });
   } catch (e) {
-    console.log(e);
+    console.error("CreateEvent Error:", e);
+    return res.status(500).json({
+      message: "Internal server error",
+    });
   }
 }

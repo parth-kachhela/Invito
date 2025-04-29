@@ -37,8 +37,6 @@ export function CreateEvent() {
       let id = ans.data?.m;
       localStorage.setItem("eventId", id);
       navigate("/dashboard");
-    } catch (e) {
-      console.log("Error " + e);
     } finally {
       setLoading(false);
     }
