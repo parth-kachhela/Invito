@@ -11,6 +11,7 @@ import { Otpsend } from "./Routes/Otpsend";
 import { Otpverify } from "./Routes/Otpverify";
 import { getEventDetails } from "./Routes/getEventDetails";
 import { deleteEvent } from "./Routes/DeleteEvent";
+import { requireEventId } from "./middleware/requireEventId";
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -29,13 +30,13 @@ app.get("/", (req, res) => {
   });
 });
 
-app.post("/api/v1/create", CreateEvent);
-app.post("/api/v1/add", AddGuest);
-app.post("/api/v1/verify", VerifyGuest);
 app.get("/api/v1/all", FetchAll);
+app.get("/api/v1/event/details", getEventDetails);
+app.post("/api/v1/create", CreateEvent);
+app.post("/api/v1/add", requireEventId, AddGuest);
+app.post("/api/v1/verify", requireEventId, VerifyGuest);
 app.post("/api/v1/send-event-otp", Otpsend);
 app.post("/api/v1/verify-event-otp", Otpverify);
-app.get("/api/v1/event/details", getEventDetails);
 app.delete("/api/v1/remove/:id", RemoveGuest);
 app.delete("/api/v1/event/:eventId", deleteEvent);
 
