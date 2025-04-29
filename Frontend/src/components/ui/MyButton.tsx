@@ -26,7 +26,7 @@ export const MyButton = (props: buttonProps) => {
   return (
     <button
       onClick={props.onClick}
-      disabled={props.loading} // Actual disable
+      disabled={props.loading}
       className={`${variantstyle[props.variant]} 
         ${sizeStyle[props.size]} 
         ${defaultStyle} 

@@ -45,7 +45,6 @@ const EventSchema = new Schema(
 
 export const EventModel = mongoose.model("Event", EventSchema);
 
-//guest schema
 const GuestSchema = new Schema(
   {
     name: {

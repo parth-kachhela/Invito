@@ -1,5 +1,3 @@
-// Event Delete API
-
 import { EventModel, GuestModel } from "../db/Schema";
 
 export const deleteEvent = async (req: any, res: any) => {
