@@ -6,7 +6,7 @@ interface buttonProps {
   text: string;
   startIcon?: ReactElement;
   onClick?: () => void;
-  loading?: boolean; // corrected spelling
+  loading?: boolean;
 }
 
 const variantstyle = {

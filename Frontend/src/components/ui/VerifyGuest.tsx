@@ -85,10 +85,9 @@ export default function VerifyGuest() {
         const code = jsQR(imageData.data, imageData.width, imageData.height);
 
         if (code) {
-          hasScannedRef.current = true; // Prevent multiple scans
+          hasScannedRef.current = true;
           setIsScanning(false);
 
-          // STOP camera and interval immediately
           if (intervalRef.current) clearInterval(intervalRef.current);
           stopCamera();
 

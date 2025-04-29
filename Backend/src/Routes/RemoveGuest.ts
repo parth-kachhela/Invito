@@ -12,7 +12,6 @@ export async function RemoveGuest(req, res) {
         .json({ success: false, message: "Invalid guestId" });
     }
 
-    // 1. Find guest to get eventId
     const guest = await GuestModel.findById(id);
     if (!guest) {
       return res
@@ -22,12 +21,9 @@ export async function RemoveGuest(req, res) {
 
     const eventId = guest.eventId;
 
-    // 2. Remove guestId from event's guests array
     await EventModel.findByIdAndUpdate(eventId, {
       $pull: { guests: id },
     });
-
-    // 3. Delete the guest document
     await GuestModel.findByIdAndDelete(id);
 
     res.status(200).json({

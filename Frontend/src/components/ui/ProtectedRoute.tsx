@@ -7,7 +7,6 @@ interface Props {
 export const ProtectedRoute = ({ children }: Props) => {
   const eventId = localStorage.getItem("eventId");
 
-  // Agar eventId nahi mila to "/" par redirect
   if (!eventId) {
     return <Navigate to="/" replace />;
   }

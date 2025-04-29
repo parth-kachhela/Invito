@@ -7,7 +7,7 @@ import VerifyGuest from "./components/ui/VerifyGuest";
 import Landingpage from "./page/Landingpage";
 import Dashboard from "./page/Dashboard";
 import VerifyOtp from "./components/ui/VerifyOtp";
-import { ProtectedRoute } from "./components/ui/ProtectedRoute"; // 👈 yeh import add karo
+import { ProtectedRoute } from "./components/ui/ProtectedRoute";
 
 function App() {
   return (

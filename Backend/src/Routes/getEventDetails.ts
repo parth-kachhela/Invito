@@ -1,5 +1,3 @@
-// Get Event Details API
-
 import { EventModel } from "../db/Schema";
 
 export const getEventDetails = async (req: any, res: any) => {

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 //@ts-ignore
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { Loader2 } from "lucide-react"; // loading icon from lucide-react
+import { Loader2 } from "lucide-react";
 
 export default function VerifyOtp() {
   const [email, setEmail] = useState("");

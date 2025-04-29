@@ -6,10 +6,8 @@ export const deleteEvent = async (req: any, res: any) => {
   try {
     const { eventId } = req.params;
 
-    // Step 1: Delete all guests related to this event
     await GuestModel.deleteMany({ eventId: eventId });
 
-    // Step 2: Delete the event itself
     await EventModel.findByIdAndDelete(eventId);
 
     return res

@@ -92,7 +92,6 @@ export default function Dashboard() {
 
   return (
     <div className="flex min-h-screen bg-gradient-to-br from-purple-100 to-indigo-200">
-      {/* Sidebar */}
       <div className="w-72 bg-white text-purple-700 flex flex-col items-start py-6 px-4 shadow-md">
         <div
           className="flex items-center space-x-2 cursor-pointer mb-6"
@@ -102,7 +101,6 @@ export default function Dashboard() {
           <span className="font-bold text-lg">Dashboard</span>
         </div>
 
-        {/* Event Details automatically show */}
         {event ? (
           <div className="space-y-3">
             <h2 className="text-xl font-bold">{event.name}</h2>
@@ -124,9 +122,7 @@ export default function Dashboard() {
         )}
       </div>
 
-      {/* Main Content */}
       <div className="flex-1 p-6">
-        {/* Top Navbar */}
         <div className="flex justify-between items-center mb-6">
           <div className="flex space-x-4">
             <Button onClick={() => setShowCheckedIn(false)} variant="outline">
@@ -152,7 +148,6 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Guest List or Checked-in List */}
         {showCheckedIn ? (
           <div>
             <h2 className="text-2xl font-bold mb-4 text-purple-700">
