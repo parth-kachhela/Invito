@@ -4,7 +4,7 @@ import { EventModel } from "../db/Schema";
 
 export const getEventDetails = async (req: any, res: any) => {
   try {
-    const { eventId } = req.query; // query se lena
+    const { eventId } = req.query;
     if (!eventId) {
       return res.status(400).json({ error: "Event ID is required" });
     }
