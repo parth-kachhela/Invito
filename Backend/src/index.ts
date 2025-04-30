@@ -38,7 +38,7 @@ app.post("/api/v1/verify", requireEventId, VerifyGuest);
 app.post("/api/v1/send-event-otp", Otpsend);
 app.post("/api/v1/verify-event-otp", Otpverify);
 app.delete("/api/v1/remove/:id", requireEventId, RemoveGuest);
-app.delete("/api/v1/event/:eventId", requireEventId, deleteEvent);
+app.delete("/api/v1/event/:eventId", deleteEvent);
 
 app.listen(3000, () => {
   console.log("app is listing ..!");
