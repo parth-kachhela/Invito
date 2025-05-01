@@ -59,7 +59,6 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-4xl font-bold mb-12">How It Works</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            {/* Card 1 */}
             <div className="p-6 bg-purple-100 rounded-2xl shadow-md hover:scale-105 transition">
               <PartyPopper className="mx-auto h-12 w-12 text-purple-600 mb-4" />
               <h3 className="text-2xl font-semibold mb-2">Create Event</h3>
@@ -68,7 +67,6 @@ export default function LandingPage() {
               </p>
             </div>
 
-            {/* Card 2 */}
             <div className="p-6 bg-purple-100 rounded-2xl shadow-md hover:scale-105 transition">
               <Users className="mx-auto h-12 w-12 text-purple-600 mb-4" />
               <h3 className="text-2xl font-semibold mb-2">Add Guests</h3>
@@ -77,7 +75,6 @@ export default function LandingPage() {
               </p>
             </div>
 
-            {/* Card 3 */}
             <div className="p-6 bg-purple-100 rounded-2xl shadow-md hover:scale-105 transition">
               <Trash2 className="mx-auto h-12 w-12 text-purple-600 mb-4" />
               <h3 className="text-2xl font-semibold mb-2">Manage & Delete</h3>
