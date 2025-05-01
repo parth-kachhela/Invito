@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { MyButton } from "./MyButton";
 
 export function AddGuest() {
-  const nameRef = useRef<HTMLInputElement>(undefined);
-  const emailRef = useRef<HTMLInputElement>(undefined);
+  const nameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
