@@ -91,40 +91,54 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-purple-100 to-indigo-200">
-      <div className="w-72 bg-white text-purple-700 flex flex-col items-start py-6 px-4 shadow-md">
-        <div
-          className="flex items-center space-x-2 cursor-pointer mb-6"
-          onClick={() => navigate("/")}
-        >
-          <Users size={32} />
-          <span className="font-bold text-lg">Dashboard</span>
+    <div className="flex flex-col lg:flex-row min-h-screen bg-gradient-to-br from-purple-100 to-indigo-200">
+      {/* Sidebar */}
+      <div className="w-full lg:w-72 bg-white text-purple-700 flex flex-col justify-between p-4 shadow-md">
+        <div>
+          <div
+            className="flex items-center space-x-2 cursor-pointer mb-6"
+            onClick={() => navigate("/")}
+          >
+            <Users size={28} />
+            <span className="font-bold text-lg">Dashboard</span>
+          </div>
+
+          {event ? (
+            <div className="space-y-2">
+              <h2 className="text-xl font-bold">{event.name}</h2>
+              <p className="text-sm">Venue: {event.vanue}</p>
+              <p className="text-sm">Date: {event.date}</p>
+              <p className="text-sm">Time: {event.time}</p>
+              <p className="text-sm">{event.description}</p>
+            </div>
+          ) : (
+            <p className="text-sm text-gray-500">Loading event details...</p>
+          )}
         </div>
 
-        {event ? (
-          <div className="space-y-3">
-            <h2 className="text-xl font-bold">{event.name}</h2>
-            <p className="text-sm">Venue: {event.vanue}</p>
-            <p className="text-sm">Date: {event.date}</p>
-            <p className="text-sm">Time: {event.time}</p>
-            <p className="text-sm">{event.description}</p>
-
-            <Button
-              variant="destructive"
-              className="cursor-pointer absolute bottom-10 ml-10"
-              onClick={deleteEvent}
-            >
-              Delete Event
-            </Button>
-          </div>
-        ) : (
-          <p className="text-sm text-gray-500">Loading event details...</p>
+        {event && (
+          <Button
+            variant="destructive"
+            className="mt-6 text-sm opacity-80 hover:opacity-100"
+            onClick={() => {
+              if (
+                window.confirm(
+                  "Are you sure you want to delete this event? This cannot be undone."
+                )
+              ) {
+                deleteEvent();
+              }
+            }}
+          >
+            Delete Event
+          </Button>
         )}
       </div>
 
-      <div className="flex-1 p-6">
-        <div className="flex justify-between items-center mb-6">
-          <div className="flex space-x-4">
+      {/* Main Content */}
+      <div className="flex-1 p-4 sm:p-6">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+          <div className="flex space-x-2">
             <Button onClick={() => setShowCheckedIn(false)} variant="outline">
               Guest List
             </Button>
@@ -132,7 +146,7 @@ export default function Dashboard() {
               Checked-in
             </Button>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-2">
             <MyButton
               variant="secondray"
               size="md"
@@ -153,7 +167,7 @@ export default function Dashboard() {
             <h2 className="text-2xl font-bold mb-4 text-purple-700">
               Checked-in Guests ({checkedInGuests.length})
             </h2>
-            <div className="grid gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
               {checkedInGuests.map((guest) => (
                 <Card key={guest._id} className="hover:shadow-md rounded-xl">
                   <CardContent className="flex justify-between items-center p-3 min-h-[70px]">
@@ -172,7 +186,7 @@ export default function Dashboard() {
             <h2 className="text-2xl font-bold mb-4 text-purple-700">
               Guest List
             </h2>
-            <div className="grid gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
               {guests.map((guest) => (
                 <Card key={guest._id} className="hover:shadow-md rounded-xl">
                   <CardContent className="flex justify-between items-center p-3 min-h-[90px]">
