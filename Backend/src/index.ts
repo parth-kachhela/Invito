@@ -37,7 +37,7 @@ app.post("/api/v1/add", requireEventId, AddGuest);
 app.post("/api/v1/verify", requireEventId, VerifyGuest);
 app.post("/api/v1/send-event-otp", Otpsend);
 app.post("/api/v1/verify-event-otp", Otpverify);
-app.delete("/api/v1/remove/:id", requireEventId, RemoveGuest);
+app.delete("/api/v1/remove/:id", RemoveGuest);
 app.delete("/api/v1/event/:eventId", deleteEvent);
 
 app.listen(3000, () => {
