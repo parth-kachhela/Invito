@@ -4,13 +4,6 @@
 
 ---
 
-## 🚀 Live Demo
-
-
-
-
----
-
 ## 🧰 Tech Stack
 
 ### Frontend:
