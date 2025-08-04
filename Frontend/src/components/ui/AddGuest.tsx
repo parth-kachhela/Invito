@@ -36,7 +36,7 @@ export function AddGuest() {
 
   return (
     <div className="h-screen w-screen flex justify-center items-center bg-gray-200">
-      <div className="flex flex-col justify-center items-center bg-white rounded-md max-h-full max-w-full gap-3 p-4 shadow-sm">
+      <div className="flex flex-col justify-center items-center bg-white rounded-md w-3xl m-4  gap-3 p-4 shadow-sm">
         <h1 className="text-xl">Guest Details :</h1>
         <Input placeholder="Name of Guest" ref={nameRef} />
         <Input placeholder="Email of Guest" ref={emailRef} />
