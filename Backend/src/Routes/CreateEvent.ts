@@ -9,7 +9,7 @@ export async function CreateEvent(req, res) {
 
     if (emailRes) {
       return res.status(409).json({
-        message: "Your event is already created",
+        message: "Your event is already created by this email",
       });
     }
 

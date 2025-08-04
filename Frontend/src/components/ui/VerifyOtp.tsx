@@ -24,7 +24,8 @@ export default function VerifyOtp() {
       alert("OTP sent to your email!");
       setStep(2);
     } catch (error) {
-      alert("Failed to send OTP");
+      //@ts-ignore
+      alert(error.response.data.message);
       console.error(error);
     } finally {
       setLoading(false);
@@ -45,7 +46,8 @@ export default function VerifyOtp() {
       alert("Event Access Granted!");
       navigate("/dashboard");
     } catch (error) {
-      alert("OTP verification failed");
+      //@ts-ignore
+      alert(error.response.data.message);
       console.error(error);
     } finally {
       setLoading(false);

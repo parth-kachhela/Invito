@@ -57,7 +57,8 @@ export function CreateEvent() {
       localStorage.setItem("eventId", id);
       navigate("/dashboard");
     } catch (e) {
-      setError("Something went wrong. Try again later.");
+      //@ts-ignore
+      setError(`error : ${e.response.data.message}`);
     } finally {
       setLoading(false);
     }
